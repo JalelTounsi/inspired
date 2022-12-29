@@ -1,7 +1,6 @@
 const qs = require("qs");
 const { default: BigNumber } = require("bignumber.js");
-import { erc20ABI, erc721ABI, erc4626ABI } from "wagmi";
-import { CheckCircleIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
   Image,
   Box,
@@ -11,8 +10,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputRightElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -25,77 +22,81 @@ import {
   useDisclosure,
   VStack,
   Text,
-  Select,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   HStack,
   SimpleGrid,
   Heading,
+  Center,
+  VisuallyHiddenInput,
 } from "@chakra-ui/react";
+import { sendTransaction } from "@wagmi/core";
 import React from "react";
-import { FaExchangeAlt, FaExclamation } from "react-icons/fa";
-
+import { FaExchangeAlt } from "react-icons/fa";
+import { FcComboChart } from "react-icons/fc";
+import { useAccount, useContract } from "wagmi";
+import { erc20ABI } from "wagmi";
 //0x: Exchange Proxy  0xdef1c0ded9bec7f1a1670819833240f027b25eff
 
 const tokenListJSON = require("../utils/TokensList.json");
 const tokens = tokenListJSON.tokens;
 
 const TokensModal = async function listAvailableTokens() {
-  console.log("initializing");
   // Create token list for modal
-  console.log("tokenListJSON: ", tokenListJSON);
-  console.log("tokens", tokens);
   let parent_modal = document.getElementById("ModalListOfTokens");
   document.getElementById("TokenToSell").value = tokens[8].symbol; // WETH
   document.getElementById("SellTokenImage").src = tokens[8].logoURI; // WETH
   document.getElementById("TokenToBuy").value = tokens[1].symbol; //DAI
   document.getElementById("BuyTokenImage").src = tokens[1].logoURI; //DAI
   document.getElementById("amountTokenToSell").value = 1;
-  for (const i in tokens) {
+  for (const token in tokens) {
     // Token row in the modal token list
     let div = document.createElement("div");
     let html = `
-        <img src="${tokens[i].logoURI}" width="24" height="24" style='float: left'/>
-        <p>${tokens[i].symbol}</p>
-          `;
+      <table style="border: 1px solid black">
+      <tr>
+        <td>
+        <Image src=${tokens[token].logoURI} />
+        </td>
+        <td>
+        <label>${tokens[token].name}</label>
+        </td>
+        <td>
+        <Button variant="ghost" onClick={() => {alert('hello')}}>yes?
+      </Button>
+      </td>
+      </tr>
+      </table>`;
     div.innerHTML += html;
     parent_modal?.appendChild(div);
   }
 };
 
-async function getPrice() {
+//ask for the price / rate
+async function RequestForQuote() {
   const amountToSell = new BigNumber(
-    document?.getElementById("amountTokenToSell")?.value * 10 ** 18
+    document?.getElementById("amountTokenToSell").value * Math.pow(10, 18)
   ).toFixed();
-  console.log(amountToSell);
   const sellToken = document.getElementById("TokenToSell").value;
   const buyToken = document.getElementById("TokenToBuy").value;
 
   const params = {
     sellToken: sellToken === null ? "WETH" : sellToken, //WETH
     buyToken: buyToken === null ? "DAI" : buyToken, //DAI
-    sellAmount: amountToSell === 0 ? 1 * 10 ** 18 : amountToSell,
+    sellAmount: amountToSell === 0 ? 1 * Math.pow(10, 18) : amountToSell,
   };
-  console.log("Getting Price");
-  let priceQuery = `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`; //'https://api.0x.org/swap/v1/price?sellToken=WETH&buyToken=USDC&sellAmount=1000000000000000000'
+  //let priceQuery = `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`; //'https://api.0x.org/swap/v1/price?sellToken=WETH&buyToken=USDC&sellAmount=1000000000000000000'
   let quoteQuery = `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
   // Fetch the swap price.
   const response = await fetch(quoteQuery);
-  console.log(priceQuery);
   let swapPriceJSON = await response.json();
   let priceFixed = Number.parseFloat(swapPriceJSON.price).toFixed(5);
-  // console.log('response: ', response)
-  console.log("response.json(): ", swapPriceJSON);
   //document.getElementById('TokenToSell').value = swapPriceJSON.sellTokenAddress === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' ? 'WETH' : 'DAI'
   document.getElementById("amountTokenToSell").value = `${
-    swapPriceJSON.sellAmount / 10 ** 18
+    swapPriceJSON.sellAmount / Math.pow(10, 18)
   }`;
   //document.getElementById('TokenToBuy').value = swapPriceJSON.buyTokenAddress === '0x6b175474e89094c44da98b954eedeac495271d0f' ? 'DAI' : 'WETH'
   document.getElementById("amountTokenToBuy").value = `${Number.parseFloat(
-    (swapPriceJSON.guaranteedPrice * swapPriceJSON.sellAmount) / 10 ** 18
+    (swapPriceJSON.guaranteedPrice * swapPriceJSON.sellAmount) /
+      Math.pow(10, 18)
   ).toFixed(5)}`;
   document.getElementById("Price").value = `1 ${
     document.getElementById("TokenToSell").value
@@ -108,12 +109,12 @@ async function getPrice() {
       swapPriceJSON.orders[0].source !== null
         ? swapPriceJSON.orders[0].source
         : "no liquidity";
-  document.getElementById("estimatedPriceImpact").value = `${Number.parseFloat(
-    swapPriceJSON.estimatedPriceImpact
-  ).toFixed(4)} %`;
+  document.getElementById("estimatedGas").value = `${Number.parseFloat(
+    swapPriceJSON.estimatedGas
+  ).toFixed(0)} wei`;
   document.getElementById("divider").style.display = "block";
   document.getElementById("liquidityProvider").style.display = "block";
-  document.getElementById("estimatedPriceImpact").style.display = "block";
+  document.getElementById("estimatedGas").style.display = "block";
   document.getElementById("garenteedPrice").style.display = "block";
   document.getElementById("Price").style.display = "block";
   document.getElementById("priceLabel").style.display = "block";
@@ -121,9 +122,59 @@ async function getPrice() {
   document.getElementById("impactLabel").style.display = "block";
   document.getElementById("rateLabel").style.display = "block";
 }
+//try getting an official quote and try to do the swap
+async function TryPerformSwapToken(_address: any, ERC20TokenContract) {
+  //const _address = document?.getElementById("UserAddress").value
+  const amountToSell = 1 * Math.pow(10, 18);
+  const sellToken = "WETH";
+  const buyToken = "DAI";
+  console.log(_address);
+  console.log(ERC20TokenContract);
+  const params = {
+    sellToken: sellToken, //WETH
+    buyToken: buyToken, //DAI
+    sellAmount: amountToSell,
+    // feeRecipient: "0xD9523Ed595Fec541425807586a0CCe7F8CeEB450",
+    // buyTokenPercentageFee: "0.3",
+    takerAddress: _address,
+  };
+  console.log("params", params);
+  let quoteQuery = `https://api.0x.org/swap/v1/price?${qs.stringify(params)}`;
+  console.log(quoteQuery);
+  // Fetch the swap quote.
+  const response = await fetch(quoteQuery);
+  let swapQuoteJSON = await response.json();
+  const maxApproval = new BigNumber(2).pow(256).minus(1);
+  console.log("approval amount: ", maxApproval);
+  // const WETHaddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+  // const ERC20TokenContract = useContract({
+  //   address: WETHaddress,
+  //   abi: erc20ABI,
+  // })
+  // Grant the allowance target an allowance to spend our tokens.
+  let tx = await ERC20TokenContract.approve(
+    swapQuoteJSON.allowanceTarget,
+    maxApproval
+  )
+  tx = await ERC20TokenContract.send({ from: _address })
+    .then((tx: any) => {
+      console.log("tx: ", tx);
+    });
+
+  // Perform the swap
+  const receipt = await sendTransaction(swapQuoteJSON);
+  console.log("receipt: ", receipt);
+}
 
 export default function SwapTokens() {
+  const { address } = useAccount();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const ERC20TokenContract = useContract({
+    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    abi: erc20ABI,
+  });
+
   return (
     <Flex align="center" justify="center">
       <HStack spacing={{ base: 4, md: 8, lg: 20 }}>
@@ -135,13 +186,12 @@ export default function SwapTokens() {
           bgSize={"lg"}
           boxSize={"50vh"}
         >
-          <CheckCircleIcon boxSize={"50px"} color={"green.500"} />
+          <Text>{address}</Text>
           <Heading as="h2" size="xl" mt={6} mb={2}>
             Swap tokens
           </Heading>
           <Text color={"gray.500"}>Swap your tokens no strings attached</Text>
         </Box>
-
         <Box>
           <Stack
             spacing={{ base: 4, md: 8, lg: 20 }}
@@ -158,6 +208,12 @@ export default function SwapTokens() {
               <VStack>
                 <VStack>
                   <FormControl isRequired>
+                    <VisuallyHiddenInput
+                      type="text"
+                      name="UserAddress"
+                      id="UserAddress"
+                      value={address}
+                    />
                     <SimpleGrid columns={2} spacing={2}>
                       <Box>
                         <HStack>
@@ -225,7 +281,7 @@ export default function SwapTokens() {
                     </SimpleGrid>
                   </FormControl>
                 </VStack>
-                <SimpleGrid columns={2} spacing={2}>
+                <SimpleGrid columns={3} spacing={2}>
                   <Box>
                     <Button
                       colorScheme="blue"
@@ -236,12 +292,12 @@ export default function SwapTokens() {
                       }}
                       onClick={onOpen}
                     >
-                      Open Modal
+                      Tokens list
                     </Button>
                   </Box>
                   <Box>
                     <Button
-                      onClick={getPrice}
+                      onClick={RequestForQuote}
                       colorScheme="green"
                       bg="green.400"
                       color="white"
@@ -250,6 +306,21 @@ export default function SwapTokens() {
                       }}
                     >
                       Get Quote
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      onClick={() =>
+                        TryPerformSwapToken(address, ERC20TokenContract)
+                      }
+                      colorScheme="red"
+                      bg="red.400"
+                      color="white"
+                      _hover={{
+                        bg: "red.500",
+                      }}
+                    >
+                      Swap tokens!
                     </Button>
                   </Box>
                 </SimpleGrid>
@@ -275,13 +346,13 @@ export default function SwapTokens() {
                   <Box maxW="sm">
                     <FormControl>
                       <FormLabel id="impactLabel" display="none">
-                        Estimated Price Impact
+                        Estimated Gas
                       </FormLabel>
                       <Input
                         type="text"
-                        name="estimatedPriceImpact"
-                        id="estimatedPriceImpact"
-                        placeholder="The Estimated Price Impact"
+                        name="estimatedGas"
+                        id="estimatedGas"
+                        placeholder="The Estimated Gas"
                         readOnly={true}
                         border={"none"}
                         display="none"
@@ -325,7 +396,7 @@ export default function SwapTokens() {
           </Stack>
           <>
             {/* the modal */}
-            <Modal isOpen={isOpen} onClose={onClose} size={"xs"}>
+            <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Modal Title</ModalHeader>

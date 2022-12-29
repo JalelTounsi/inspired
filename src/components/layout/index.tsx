@@ -1,9 +1,8 @@
 import React, { ReactNode } from "react";
-import { Box, Container,useColorModeValue } from "@chakra-ui/react";
+import { Image, Box, Container,useColorModeValue, Center } from "@chakra-ui/react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { NetworkStatus } from "components/NetworkStatus";
-
 interface Props {
   children: ReactNode;
 }
@@ -36,7 +35,7 @@ export function Layout(props: Props) {
 >
       <Header />
       <Container maxW="container.md">
-        {props.children}
+        {props.children}     
       </Container>
       <Footer />
     </Box>

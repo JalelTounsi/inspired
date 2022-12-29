@@ -56,7 +56,7 @@ export function SendTransaction() {
             bgSize={"lg"}
             boxSize={"50vh"}
           >
-            <CheckCircleIcon boxSize={"50px"} color={"green.500"} />
+            {/* <CheckCircleIcon boxSize={"50px"} color={"green.500"} /> */}
             <Heading as="h2" size="xl" mt={6} mb={2}>
               Transfer tokens
             </Heading>
@@ -64,6 +64,7 @@ export function SendTransaction() {
               Transfer your token to another address no strings attached
             </Text>
           </Box>
+          <Divider id="divider" orientation="vertical" border={'solid'}/>
           {/* the transfer form */}
           <Box
             borderRadius="lg"
@@ -87,7 +88,7 @@ export function SendTransaction() {
                   p={8}
                   color={useColorModeValue("gray.700", "whiteAlpha.900")}
                   shadow="base"
-                  width={"50vh"}
+                  width={"69vh"}
                 >
                   <VStack>
                     <Box>

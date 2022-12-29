@@ -1,7 +1,7 @@
-import { ThemingProps } from '@chakra-ui/react'
+import { ThemingProps, useColorModeValue } from '@chakra-ui/react'
 import { mainnet, goerli, sepolia, polygon, optimism, arbitrum } from '@wagmi/chains'
 
-export const SITE_NAME = 'Apex Wave'
+export const SITE_NAME = 'Inspired'
 export const SITE_DESCRIPTION = 'DeFi Liquidity aggregator'
 
 export const THEME_INITIAL_COLOR = 'system'

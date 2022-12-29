@@ -1,56 +1,108 @@
-import { Box, Button, Container, createIcon, Heading, Icon, Stack, Text, useColorModeValue } from '@chakra-ui/react'
-import { Head } from 'components/layout/Head'
-import React from 'react'
-import { SITE_DESCRIPTION, SITE_NAME } from 'utils/config'
+import {
+  Image,
+  Box,
+  Button,
+  Center,
+  Container,
+  createIcon,
+  Heading,
+  Icon,
+  Stack,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { Head } from "components/layout/Head";
+import { useRouter } from "next/router";
+import React from "react";
+import { SITE_DESCRIPTION, SITE_NAME } from "utils/config";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
-      <Box minH={'100vh'}>
-        <Container maxW={'3xl'} alignItems={'center'} justifyContent={'center'}>
-          <Stack as={Box} textAlign={'center'} spacing={{ base: 8, md: 14 }} py={{ base: 20, md: 36 }}>
-          <Heading fontWeight={600} fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }} lineHeight={'110%'}>
-              {SITE_NAME} <br />
-              <Text as={'span'} color={'green.400'}>
+      <Box minH={"100vh"}>
+        <Container maxW={"3xl"} alignItems={"center"} justifyContent={"center"}>
+          <Stack
+            as={Box}
+            textAlign={"center"}
+            spacing={{ base: 8, md: 14 }}
+            py={{ base: 20, md: 36 }}
+          >
+            <Heading
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+              lineHeight={"110%"}
+            >
+              <Text as="samp">{SITE_NAME}</Text> <br />
+              <Text as={"mark"} color={"black.400"}>
                 {SITE_DESCRIPTION}
               </Text>
             </Heading>
-            <Text color={'gray.500'}>
-              Monetize your content by charging your most loyal readers and reward them loyalty points. Give back to your loyal readers by granting
-              them access to your pre-releases and sneak-peaks. Monetize your content by charging your most loyal readers and reward them loyalty
-              points. Give back to your loyal readers by granting them access to your pre-releases and sneak-peaks.
+            <Text color={"gray.500"}>
+              Why use one decentralized exchange when you can use them all from the comfort of your house?
+              {SITE_NAME} aggregates all the offers from 50+ liquidity sources on various public chains, 
+              private liquidity providers, decentralized exchanges and merges them into one trade so 
+              you can save energy, time and money.
+              {/* Monetize your content by charging your most loyal readers and
+              reward them loyalty points. Give back to your loyal readers by
+              granting them access to your pre-releases and sneak-peaks.
+              Monetize your content by charging your most loyal readers and
+              reward them loyalty points. Give back to your loyal readers by
+              granting them access to your pre-releases and sneak-peaks. */}
             </Text>
-            <Stack direction={'column'} spacing={3} align={'center'} alignSelf={'center'} position={'relative'}>
+            <Stack
+              direction={"column"}
+              spacing={3}
+              align={"center"}
+              alignSelf={"center"}
+              position={"relative"}
+            >
               <Button
-                colorScheme={'green'}
-                bg={'green.400'}
-                rounded={'full'}
+                colorScheme={"green"}
+                bg={"green.400"}
+                rounded={"full"}
                 px={6}
                 _hover={{
-                  bg: 'green.500',
-                }}>
+                  bg: "green.500",
+                }}
+                onClick={() => router.push("/swap")}
+              >
                 Launch app
               </Button>
-              <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
+              {/* <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
                 Learn more about our tech
-              </Button>
+              </Button> */}
+
               <Box>
-                <Icon as={Arrow} color={useColorModeValue('gray.800', 'gray.300')} w={71} position={'absolute'} right={-71} top={'10px'} />
-                <Text fontSize={'lg'} fontFamily={'Caveat'} position={'absolute'} right={'-125px'} top={'-15px'} transform={'rotate(10deg)'}>
-                  The best in the block!
-                </Text>
+                <Icon
+                  as={Arrow}
+                  color={useColorModeValue("gray.800", "gray.300")}
+                  w={71}
+                  position={"absolute"}
+                  right={-71}
+                  top={"10px"}
+                />
+<Text
+                fontSize={'lg'}
+                fontFamily={'Caveat'}
+                position={'absolute'}
+                right={'-125px'}
+                top={'-15px'}
+                transform={'rotate(10deg)'}>
+                your move!
+              </Text>
               </Box>
             </Stack>
           </Stack>
         </Container>
       </Box>
     </>
-  )
+  );
 }
 
 const Arrow = createIcon({
-  displayName: 'Arrow',
-  viewBox: '0 0 72 24',
+  displayName: "Arrow",
+  viewBox: "0 0 72 24",
   path: (
     <path
       fillRule="evenodd"
@@ -59,4 +111,4 @@ const Arrow = createIcon({
       fill="currentColor"
     />
   ),
-})
+});
