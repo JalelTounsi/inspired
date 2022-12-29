@@ -1,4 +1,5 @@
-import { Box, Container, Stack } from "@chakra-ui/react";
+import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { Box, Container, Heading, Link, Stack, Text } from "@chakra-ui/react";
 import { SendTransaction } from "components/SendTransaction";
 import React from "react";
 

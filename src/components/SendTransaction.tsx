@@ -1,11 +1,14 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Divider,
   Flex,
+  Heading,
+  HStack,
   Input,
   Link,
+  SimpleGrid,
   Stack,
   Text,
   useColorModeValue,
@@ -40,114 +43,165 @@ export function SendTransaction() {
   return (
     <>
       <Flex
-        bg={useColorModeValue("gray.100", "gray.900")}
+        
         align="center"
         justify="center"
       >
-        <Box borderRadius="lg" p={{ base: 5, lg: 16 }} bgSize={"md"}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              sendTransaction?.();
-            }}
+        <HStack spacing={{ base: 4, md: 8, lg: 20 }}>
+          {/* The title */}
+          <Box
+            textAlign="center"
+            borderRadius="lg"
+            p={{ base: 5, lg: 16 }}
+            bgSize={"lg"}
+            boxSize={"50vh"}
           >
-            <Stack
-              spacing={{ base: 4, md: 8, lg: 20 }}
-              direction={{ base: "column", md: "row" }}
+            <CheckCircleIcon boxSize={"50px"} color={"green.500"} />
+            <Heading as="h2" size="xl" mt={6} mb={2}>
+              Transfer tokens
+            </Heading>
+            <Text color={"gray.500"}>
+              Transfer your token to another address no strings attached
+            </Text>
+          </Box>
+          {/* the transfer form */}
+          <Box
+            borderRadius="lg"
+            p={{ base: 5, lg: 16 }}
+            bgSize={"md"}
+            
+          >
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendTransaction?.();
+              }}
             >
-              <Box
-                bg={useColorModeValue("white", "gray.700")}
-                borderRadius="lg"
-                p={8}
-                color={useColorModeValue("gray.700", "whiteAlpha.900")}
-                shadow="base"
+              <Stack
+                spacing={{ base: 4, md: 8, lg: 20 }}
+                direction={{ base: "column", md: "row" }}
               >
-                <VStack>
-                  <Box>
-                    <Input
-                      onChange={(e) => setTo(e.target.value)}
-                      aria-label="Recipient"
-                      type="text"
-                      width="xs"
-                      name="destinationAddress"
-                      placeholder="Destination Address"
-                      id="destinationAddress"
-                      variant={"flushed"}
-                      htmlSize={8}
-                      value={to}
-                    />
-                    <Input
-                      type="text"
-                      htmlSize={4}
-                      name="AmountToSend"
-                      aria-label="Amount (ether)"
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="0.05"
-                      value={amount}
-                      id="AmountToSend"
-                      variant={"flushed"}
-                    />
-                  </Box>
-                  <Divider id="divider" orientation="horizontal" />
-                  <Button
-                    disabled={isLoading || !sendTransaction || !to || !amount}
-                    colorScheme="green"
-                    bg="green.400"
-                    color="white"
-                    _hover={{
-                      bg: "green.500",
-                    }}
-                    float="right"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      sendTransaction?.();
-                    }}
-                    type="submit"
-                  >
-                    {isLoading ? "Sending..." : "Send"}
-                  </Button>
-                  <Divider id="divider" orientation="horizontal" />
-                  <Box>
-                    {isSuccess && (
-                        <div>
-                          <Text>
+                <Box
+                  bg={useColorModeValue("white", "gray.700")}
+                  borderRadius="lg"
+                  p={8}
+                  color={useColorModeValue("gray.700", "whiteAlpha.900")}
+                  shadow="base"
+                  width={"50vh"}
+                >
+                  <VStack>
+                    <Box>
+                      <Input
+                        onChange={(e) => setTo(e.target.value)}
+                        aria-label="Recipient"
+                        type="text"
+                        width="xs"
+                        name="destinationAddress"
+                        placeholder="Destination Address"
+                        id="destinationAddress"
+                        variant={"flushed"}
+                        htmlSize={8}
+                        value={to}
+                      />
+                      <SimpleGrid columns={2}>
+                        <Input
+                          type="text"
+                          htmlSize={4}
+                          name="AmountToSend"
+                          aria-label="Amount (ether)"
+                          onChange={(e) => setAmount(e.target.value)}
+                          placeholder="0.05"
+                          value={amount}
+                          id="AmountToSend"
+                          variant={"flushed"}
+                        />
+
+                        <Button
+                          disabled={
+                            isLoading || !sendTransaction || !to || !amount
+                          }
+                          colorScheme="green"
+                          bg="green.400"
+                          color="white"
+                          _hover={{
+                            bg: "green.500",
+                          }}
+                          float="right"
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            sendTransaction?.();
+                          }}
+                          type="submit"
+                        >
+                          {isLoading ? "Sending..." : "Send"}
+                        </Button>
+                      </SimpleGrid>
+                    </Box>
+                    {/* <Divider id="divider" orientation="horizontal" /> */}
+                    <Box>
+                      {isSuccess && (
+                        // && (
+                        //     <div>
+                        //       <Text>
+                        //         <Link
+                        //           color="teal.500"
+                        //           href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
+                        //           target="_blank"
+                        //           cursor="pointer"
+                        //         >
+                        //           Transaction Successful{" "}
+                        //           <ExternalLinkIcon mx="2px" />
+                        //         </Link>
+                        //       </Text>
+                        //       <Text>{amount} ether sent to </Text>
+                        //       <Text>
+                        //         <Link
+                        //           color="teal.500"
+                        //           href={`https://sepolia.etherscan.io/address/${to}`}
+                        //           target="_blank"
+                        //           cursor="pointer"
+                        //         >
+                        //           {to} <ExternalLinkIcon mx="2px" />
+                        //         </Link>
+                        //       </Text>
+                        //     </div>
+                        //   )
+                        // toast({
+                        //   // title: `<a href=${`https://sepolia.etherscan.io/tx/${data?.hash}`}>Transaction Successful!</a>`,
+                        //   // description: `${amount} ether sent to <a href=${`https://sepolia.etherscan.io/address/${to}`}>${to}</a>`,
+                        //   title: `Transaction Successful!`,
+                        //   description: `${amount} ether sent to ${to} <a href=${`https://sepolia.etherscan.io/address/${to}`}><ExternalLinkIcon /></a>`,
+                        //   status: "success",
+                        //   duration: 5000,
+                        //   isClosable: true,
+                        // })
+                        <Box textAlign="center" py={10} px={6}>
+                          <CheckCircleIcon
+                            boxSize={"50px"}
+                            color={"green.500"}
+                          />
+                          <Heading as="h2" size="xl" mt={6} mb={2}>
+                            Transfer Successful!
+                          </Heading>
+                          <Text color={"gray.500"}>
+                            {amount} sent to {to}{" "}
                             <Link
-                              color="teal.500"
                               href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
                               target="_blank"
-                              cursor="pointer"
                             >
-                              Transaction Successful{" "}
-                              <ExternalLinkIcon mx="2px" />
+                              <ExternalLinkIcon />
                             </Link>
                           </Text>
-                          <Text>{amount} ether sent to </Text>
-                          <Text>
-                            <Link
-                              color="teal.500"
-                              href={`https://sepolia.etherscan.io/address/${to}`}
-                              target="_blank"
-                              cursor="pointer"
-                            >
-                              {to} <ExternalLinkIcon mx="2px" />
-                            </Link>
-                          </Text>
-                        </div>
-                      ) &&
-                      toast({
-                        title: `<a href=${`https://sepolia.etherscan.io/tx/${data?.hash}`}Transaction Successful!</a>`,
-                        description: `${amount} ether sent to <a href=${`https://sepolia.etherscan.io/address/${to}`}`,
-                        status: "success",
-                        duration: 9000,
-                        isClosable: true,
-                      })}
-                  </Box>
-                </VStack>
-              </Box>
-            </Stack>
-            <></>
-          </form>
-        </Box>
+                        </Box>
+                      )}
+                    </Box>
+                  </VStack>
+                </Box>
+              </Stack>
+              <></>
+            </form>
+          </Box>
+        </HStack>
       </Flex>
     </>
   );
