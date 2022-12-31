@@ -1,6 +1,5 @@
 const qs = require("qs");
 const { default: BigNumber } = require("bignumber.js");
-import { CheckCircleIcon } from "@chakra-ui/icons";
 import {
   Image,
   Box,
@@ -25,13 +24,10 @@ import {
   HStack,
   SimpleGrid,
   Heading,
-  Center,
   VisuallyHiddenInput,
 } from "@chakra-ui/react";
 import { sendTransaction } from "@wagmi/core";
 import React from "react";
-import { FaExchangeAlt } from "react-icons/fa";
-import { FcComboChart } from "react-icons/fc";
 import { useAccount, useContract } from "wagmi";
 import { erc20ABI } from "wagmi";
 //0x: Exchange Proxy  0xdef1c0ded9bec7f1a1670819833240f027b25eff
@@ -51,17 +47,16 @@ const TokensModal = async function listAvailableTokens() {
     // Token row in the modal token list
     let div = document.createElement("div");
     let html = `
-      <table style="border: 1px solid black">
+      <table>
       <tr>
         <td>
-        <Image src=${tokens[token].logoURI} />
+        <Image src=${tokens[token].logoURI} height="32px" width="32px" />
         </td>
         <td>
         <label>${tokens[token].name}</label>
         </td>
         <td>
-        <Button variant="ghost" onClick={() => {alert('hello')}}>yes?
-      </Button>
+        <button variant="ghost" onClick ="alert('hello')">yes?</button>
       </td>
       </tr>
       </table>`;
@@ -168,10 +163,9 @@ async function TryPerformSwapToken(_address: any, ERC20TokenContract) {
 
 export default function SwapTokens() {
   const { address } = useAccount();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const ERC20TokenContract = useContract({
-    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  const _ERC20TokenContract = useContract({
+    _address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     abi: erc20ABI,
   });
 
@@ -186,7 +180,7 @@ export default function SwapTokens() {
           bgSize={"lg"}
           boxSize={"50vh"}
         >
-          <Text>{address}</Text>
+          {/* <Text>{address}</Text> */}
           <Heading as="h2" size="xl" mt={6} mb={2}>
             Swap tokens
           </Heading>
@@ -311,7 +305,7 @@ export default function SwapTokens() {
                   <Box>
                     <Button
                       onClick={() =>
-                        TryPerformSwapToken(address, ERC20TokenContract)
+                        TryPerformSwapToken(address, _ERC20TokenContract)
                       }
                       colorScheme="red"
                       bg="red.400"
