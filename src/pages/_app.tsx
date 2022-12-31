@@ -9,7 +9,16 @@ import { useRouter } from "next/router";
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted();
   const router = useRouter();
-  if (router.pathname === "_errors") return <Component {...pageProps} />;
+
+  // no layout for the home page
+  if (router.pathname === (`/`))
+  return (
+    <ChakraProvider>
+        {isMounted && (
+            <Component {...pageProps} />
+        )}
+    </ChakraProvider>
+  );
 
   //the root component
   return (
