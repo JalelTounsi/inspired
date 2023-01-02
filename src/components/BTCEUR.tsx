@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 
 let tvScriptLoadingPromise;
 
-export default function ETHBTC(props: Props) {
+export default function BTCEUR(props: Props) {
   const onLoadScriptRef = useRef();
   const pair_1 = 'ETHDAI'
   const pair_2 = 'ETHBTC'
@@ -13,7 +13,7 @@ export default function ETHBTC(props: Props) {
   const pair_4 = 'ETHEUR'
   const pair_5 = 'BTCEUR'
 
-  let pair = pair_2
+  let pair = pair_5
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
 

@@ -5,6 +5,7 @@ import { ChakraProvider } from "providers/Chakra";
 import { useIsMounted } from "hooks/useIsMounted";
 import React from "react";
 import { useRouter } from "next/router";
+import Hero from "components/hero";
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted();
@@ -15,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
         {isMounted && (
-            <Component {...pageProps} />
+          <Component {...pageProps} />
         )}
     </ChakraProvider>
   );

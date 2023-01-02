@@ -1,6 +1,6 @@
 import { CheckCircleIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Container, Heading, Link, Stack, Text } from "@chakra-ui/react";
-import { SendTransaction } from "components/SendTransaction";
+import { TransferPay } from "components/TransferPay";
 import React from "react";
 
 export default function Transfer() {
@@ -8,7 +8,7 @@ export default function Transfer() {
   <Box minH={'100vh'}>
   <Container maxW={'3xl'} alignItems={'center'} justifyContent={'center'}>
     <Stack as={Box} textAlign={'center'} spacing={{ base: 8, md: 14 }} py={{ base: 20, md: 36 }}>
-    <SendTransaction />
+    <TransferPay />
     </Stack>
   </Container>
 </Box>

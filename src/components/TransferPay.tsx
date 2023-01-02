@@ -24,7 +24,7 @@ import {
 } from "wagmi";
 import { useToast } from "@chakra-ui/react";
 
-export function SendTransaction() {
+export function TransferPay() {
   const [to, setTo] = React.useState("");
   const [debouncedTo] = useDebounce(to, 500);
   const [amount, setAmount] = React.useState("");
@@ -42,11 +42,7 @@ export function SendTransaction() {
   const toast = useToast();
   return (
     <>
-      <Flex
-        
-        align="center"
-        justify="center"
-      >
+      <Flex align="center" justify="center">
         <HStack spacing={{ base: 4, md: 8, lg: 20 }}>
           {/* The title */}
           <Box
@@ -58,20 +54,15 @@ export function SendTransaction() {
           >
             {/* <CheckCircleIcon boxSize={"50px"} color={"green.500"} /> */}
             <Heading as="h2" size="xl" mt={6} mb={2}>
-              Transfer tokens
+              Transfer or Pay
             </Heading>
             <Text color={"gray.500"}>
-              Transfer your token to another address no strings attached
+              Transfer your tokens to another wallet, pay your friends or send them a message
             </Text>
           </Box>
-          <Divider id="divider" orientation="vertical" border={'solid'}/>
+          <Divider id="divider" orientation="vertical" border={"solid"} />
           {/* the transfer form */}
-          <Box
-            borderRadius="lg"
-            p={{ base: 5, lg: 16 }}
-            bgSize={"md"}
-            
-          >
+          <Box borderRadius="lg" p={{ base: 5, lg: 16 }} bgSize={"md"}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -104,7 +95,6 @@ export function SendTransaction() {
                         htmlSize={8}
                         value={to}
                       />
-                      <SimpleGrid columns={2}>
                         <Input
                           type="text"
                           htmlSize={4}
@@ -116,27 +106,37 @@ export function SendTransaction() {
                           id="AmountToSend"
                           variant={"flushed"}
                         />
-
-                        <Button
-                          disabled={
-                            isLoading || !sendTransaction || !to || !amount
-                          }
-                          colorScheme="green"
-                          bg="green.400"
-                          color="white"
-                          _hover={{
-                            bg: "green.500",
-                          }}
-                          float="right"
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            sendTransaction?.();
-                          }}
-                          type="submit"
-                        >
-                          {isLoading ? "Sending..." : "Send"}
-                        </Button>
-                      </SimpleGrid>
+                        <Input
+                          onChange={(e) => setTo(e.target.value)}
+                          aria-label="Message"
+                          type="text"
+                          width="xs"
+                          name="Message"
+                          placeholder="Message"
+                          id="message"
+                          variant={"flushed"}
+                          htmlSize={8}
+                          value={to}
+                        />
+                      <Button
+                        disabled={
+                          isLoading || !sendTransaction || !to || !amount
+                        }
+                        colorScheme="green"
+                        bg="green.400"
+                        color="white"
+                        _hover={{
+                          bg: "green.500",
+                        }}
+                        float="right"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          sendTransaction?.();
+                        }}
+                        type="submit"
+                      >
+                        {isLoading ? "Sending..." : "Send"}
+                      </Button>
                     </Box>
                     {/* <Divider id="divider" orientation="horizontal" /> */}
                     <Box>

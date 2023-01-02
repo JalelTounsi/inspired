@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 
 let tvScriptLoadingPromise;
 
-export default function ETHUSD(props: Props) {
+export default function ETHEUR(props: Props) {
   const onLoadScriptRef = useRef();
   const pair_1 = 'ETHDAI'
   const pair_2 = 'ETHBTC'
@@ -13,7 +13,7 @@ export default function ETHUSD(props: Props) {
   const pair_4 = 'ETHEUR'
   const pair_5 = 'BTCEUR'
 
-  let pair = pair_3
+  let pair = pair_4
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
 
@@ -44,7 +44,7 @@ export default function ETHUSD(props: Props) {
           width: '100%',
           height: 500,
           symbol: `KRAKEN:${pair}`,
-          interval: "D",
+          interval: "W",
           timezone: "Etc/UTC",
           theme: "dark",
           style: "1",

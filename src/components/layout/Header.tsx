@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Text,
-  Image,
   Flex,
   useColorModeValue,
   Spacer,
@@ -15,15 +14,20 @@ import {
   Stack,
   useDisclosure,
   useBreakpointValue,
-  HStack,
 } from "@chakra-ui/react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { SITE_NAME } from "utils/config";
-
+import { Logo } from "utils/lib";
 interface Props {
   className?: string;
+}
+
+interface NavItem {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
 }
 
 export function Header(props: Props) {
@@ -46,7 +50,7 @@ export function Header(props: Props) {
       borderBottomStyle="solid"
       borderBottomColor="white"
     >
-      <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+      <Flex flex={{ base: 2 }} justify={{ base: "center", md: "start" }}>
         <Link
           href={"/"}
           textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -114,7 +118,6 @@ const DesktopNav = () => {
                 <Text as="samp">{navItem.label}</Text>
               </Link>
             </PopoverTrigger>
-
             {navItem.children && (
               <PopoverContent
                 border={0}
@@ -242,61 +245,41 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
   );
 };
 
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
-
 const NAV_ITEMS: Array<NavItem> = [
+  //{
+  //   label: "Home",
+  //   href: "/",
+  //   // children: [
+  //   //   {
+  //   //     label: 'Explore Design Work',
+  //   //     subLabel: 'Trending Design to inspire you',
+  //   //     href: '#',
+  //   //   },
+  //   //   {
+  //   //     label: 'View wallet balance',
+  //   //     subLabel: 'Up-and-coming Designers',
+  //   //     href: '#',
+  //   //   },
+  //   // ],
+  // },
   {
-    label: "Home",
-    href: "/",
-    // children: [
-    //   {
-    //     label: 'Explore Design Work',
-    //     subLabel: 'Trending Design to inspire you',
-    //     href: '#',
-    //   },
-    //   {
-    //     label: 'View wallet balance',
-    //     subLabel: 'Up-and-coming Designers',
-    //     href: '#',
-    //   },
-    // ],
+    label: "Trade",
+    href: "/trade",
   },
   {
-    label: "Swap",
-    href: "/swap",
-  },
-  {
-    label: "Transfer",
+    label: "Pay",
     href: "transfer",
   },
   {
-    label: "ETH/USD",
-    href: "/ETHUSD",
+    label: "ETH/EUR",
+    href: "/ETHEUR",
   },
   {
     label: "ETH/BTC",
     href: "/ETHBTC",
-  }
+  },
+  {
+    label: "BTC/EUR",
+    href: "/BTCEUR",
+  },
 ];
-
-const Logo = (props: any) => {
-  return (
-    <Stack spacing={1} direction='row' align='center'>
-      <>
-        <Image
-          width={8}
-          height={8}
-          alt={"Login Image"}
-          objectFit={"cover"}
-          src={"/gangstaish.png"}
-        />
-        <Text as="kbd">{SITE_NAME}</Text>
-      </>
-    </Stack>
-  );
-};

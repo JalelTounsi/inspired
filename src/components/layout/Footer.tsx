@@ -1,37 +1,14 @@
-import React, { ReactNode } from 'react'
-import { Image, Box, chakra, Container, Flex, HStack, Link, Stack, Text, useBreakpointValue, useColorModeValue, VisuallyHidden } from '@chakra-ui/react'
-import { FaGithub, FaLinkedin, FaMedium, FaTwitter } from 'react-icons/fa'
-import { LinkComponent } from 'components/LinkComponent'
-import { SITE_DESCRIPTION, SITE_NAME, SOCIAL_GITHUB, SOCIAL_LINKEDIN, SOCIAL_MEDIUM, SOCIAL_TWITTER } from 'utils/config'
+import React from 'react'
+import { Box, Container, Link, Stack, Text, useBreakpointValue, useColorModeValue } from '@chakra-ui/react'
+import { FaDiscord, FaGithub, FaLinkedin, FaMedium, FaReddit, FaTwitter } from 'react-icons/fa'
+import { SITE_DESCRIPTION, SOCIAL_GITHUB, SOCIAL_LINKEDIN, SOCIAL_MEDIUM, SOCIAL_TWITTER, SOCIAL_DISCORD, SOCIAL_REDDIT } from 'utils/config'
 import { NetworkStatus } from 'components/NetworkStatus'
+import { Logo, SocialButton } from 'utils/lib'
 
 interface Props {
   className?: string
 }
 
-const SocialButton = ({ children, label, href }: { children: ReactNode; label: string; href: string }) => {
-  return (
-    <chakra.button
-      bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-      rounded={'full'}
-      w={8}
-      h={8}
-      cursor={'pointer'}
-      as={'a'}
-      href={href}
-      target={'_blank'}
-      display={'inline-flex'}
-      alignItems={'center'}
-      justifyContent={'center'}
-      transition={'background 0.3s ease'}
-      _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
-      }}>
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
-  )
-}
 export function Footer(props: Props) {
   const className = props.className ?? ''
   return (
@@ -79,6 +56,12 @@ export function Footer(props: Props) {
           <SocialButton label={'Github'} href={`https://github.com/${SOCIAL_GITHUB}`}>
             <FaGithub />
           </SocialButton>
+          <SocialButton label={'Discord'} href={`https://discord.com/channels/${SOCIAL_DISCORD}`}>
+            <FaDiscord />
+          </SocialButton>
+          <SocialButton label={'Reddit'} href={`https://www.reddit.com/r/${SOCIAL_REDDIT}`}>
+            <FaReddit />
+          </SocialButton>
           <SocialButton label={'LinkedIn'} href={`https://www.linkedin.com/in/${SOCIAL_LINKEDIN}`}>
             <FaLinkedin />
           </SocialButton>
@@ -90,20 +73,3 @@ export function Footer(props: Props) {
     </Box>
   )
 }
-
-const Logo = (props: any) => {
-  return (
-    <HStack>
-      <>
-        <Image
-          width={8}
-          height={8}
-          alt={"Login Image"}
-          objectFit={"cover"}
-          src={"/gangstaish.png"}
-        />
-        <Text as="kbd">Inspired</Text>
-      </>
-    </HStack>
-  );
-};

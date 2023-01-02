@@ -30,10 +30,31 @@ import { sendTransaction } from "@wagmi/core";
 import React from "react";
 import { useAccount, useContract } from "wagmi";
 import { erc20ABI } from "wagmi";
+import { useNetwork } from "wagmi";
 //0x: Exchange Proxy  0xdef1c0ded9bec7f1a1670819833240f027b25eff
 
 const tokenListJSON = require("../utils/TokensList.json");
 const tokens = tokenListJSON.tokens;
+
+const CreateOxAPICall = function CreateOxAPICall(chain) {
+  let quoteQuery = ""
+  const amountToSell = new BigNumber(document?.getElementById("amountTokenToSell").value * Math.pow(10, 18)).toFixed();
+  const sellToken = document.getElementById("TokenToSell").value;
+  const buyToken = document.getElementById("TokenToBuy").value;
+
+  const params = {
+    sellToken: sellToken === null ? "WETH" : sellToken, //WETH
+    buyToken: buyToken === null ? "DAI" : buyToken, //DAI
+    sellAmount: amountToSell === 0 ? 1 * Math.pow(10, 18) : amountToSell,
+  };
+  if (chain.network === "homestead") {
+    quoteQuery = `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
+  }
+  if (chain.network === "goerli") {
+    quoteQuery = `https://${chain.network}.api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
+  } 
+  console.log(quoteQuery);
+};
 
 const TokensModal = async function listAvailableTokens() {
   // Create token list for modal
@@ -118,7 +139,7 @@ async function RequestForQuote() {
   document.getElementById("rateLabel").style.display = "block";
 }
 //try getting an official quote and try to do the swap
-async function TryPerformSwapToken(_address: any, ERC20TokenContract) {
+async function TryPerformSwapToken(_address: any, ERC20TokenContrac) {
   //const _address = document?.getElementById("UserAddress").value
   const amountToSell = 1 * Math.pow(10, 18);
   const sellToken = "WETH";
@@ -150,20 +171,20 @@ async function TryPerformSwapToken(_address: any, ERC20TokenContract) {
   let tx = await ERC20TokenContract.approve(
     swapQuoteJSON.allowanceTarget,
     maxApproval
-  )
-  tx = await ERC20TokenContract.send({ from: _address })
-    .then((tx: any) => {
-      console.log("tx: ", tx);
-    });
+  );
+  tx = await ERC20TokenContract.send({ from: _address }).then((tx: any) => {
+    console.log("tx: ", tx);
+  });
 
   // Perform the swap
   const receipt = await sendTransaction(swapQuoteJSON);
   console.log("receipt: ", receipt);
 }
 
-export default function SwapTokens() {
+export default function TradeTokens() {
   const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { chain, chains } = useNetwork();
   const _ERC20TokenContract = useContract({
     _address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     abi: erc20ABI,
@@ -182,9 +203,14 @@ export default function SwapTokens() {
         >
           {/* <Text>{address}</Text> */}
           <Heading as="h2" size="xl" mt={6} mb={2}>
-            Swap tokens
+            Trade
           </Heading>
-          <Text color={"gray.500"}>Swap your tokens no strings attached</Text>
+          <Heading as="h2" size="xl" mt={6} mb={2}>
+            Tokens & NFTs
+          </Heading>
+          <Text color={"gray.500"}>
+            Trade your tokens or NFTs no strings attached
+          </Text>
         </Box>
         <Box>
           <Stack
@@ -304,9 +330,10 @@ export default function SwapTokens() {
                   </Box>
                   <Box>
                     <Button
-                      onClick={() =>
-                        TryPerformSwapToken(address, _ERC20TokenContract)
-                      }
+                      // onClick={() =>
+                      //   TryPerformSwapToken(address, _ERC20TokenContract)
+                      // }
+                      onClick={() => CreateOxAPICall(chain)}
                       colorScheme="red"
                       bg="red.400"
                       color="white"
