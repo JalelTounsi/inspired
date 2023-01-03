@@ -31,12 +31,12 @@ export default function CallToActionWithAnnotation() {
           py={{ base: 20, md: 36 }}
         >
           <Heading
-            fontWeight={600}
+            fontWeight={500}
             fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
-            lineHeight={"110%"}
+            lineHeight={"100%"}
           >
-            <Text as="samp">{SITE_NAME}</Text> <br />
-            <Text as={"mark"} color={"black.400"}>
+            <Text as="mark">{SITE_NAME}</Text> <br />
+            <Text as={"samp"} color={"black.400"}>
               {SITE_DESCRIPTION}
             </Text>
           </Heading>

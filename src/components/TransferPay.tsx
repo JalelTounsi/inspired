@@ -18,6 +18,7 @@ import { parseEther } from "ethers/lib/utils.js";
 import * as React from "react";
 import { useDebounce } from "use-debounce";
 import {
+  useNetwork,
   usePrepareSendTransaction,
   useSendTransaction,
   useWaitForTransaction,
@@ -25,6 +26,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 
 export function TransferPay() {
+  const {chain, chains} = useNetwork()
   const [to, setTo] = React.useState("");
   const [debouncedTo] = useDebounce(to, 500);
   const [amount, setAmount] = React.useState("");
@@ -106,18 +108,6 @@ export function TransferPay() {
                           id="AmountToSend"
                           variant={"flushed"}
                         />
-                        <Input
-                          onChange={(e) => setTo(e.target.value)}
-                          aria-label="Message"
-                          type="text"
-                          width="xs"
-                          name="Message"
-                          placeholder="Message"
-                          id="message"
-                          variant={"flushed"}
-                          htmlSize={8}
-                          value={to}
-                        />
                       <Button
                         disabled={
                           isLoading || !sendTransaction || !to || !amount
@@ -138,7 +128,6 @@ export function TransferPay() {
                         {isLoading ? "Sending..." : "Send"}
                       </Button>
                     </Box>
-                    {/* <Divider id="divider" orientation="horizontal" /> */}
                     <Box>
                       {isSuccess && (
                         // && (
@@ -187,7 +176,7 @@ export function TransferPay() {
                           <Text color={"gray.500"}>
                             {amount} sent to {to}{" "}
                             <Link
-                              href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
+                              href={`https://${chain.network}.etherscan.io/tx/${data?.hash}`}
                               target="_blank"
                             >
                               <ExternalLinkIcon />

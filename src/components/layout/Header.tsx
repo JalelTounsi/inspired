@@ -281,5 +281,8 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "BTC/EUR",
     href: "/BTCEUR",
+  },  {
+    label: "tokens",
+    href: "/tokensList",
   },
 ];

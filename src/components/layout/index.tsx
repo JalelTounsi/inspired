@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { Box, Container, useColorModeValue } from "@chakra-ui/react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { Head } from "./Head";
 interface Props {
   children: ReactNode;
 }
@@ -22,18 +23,21 @@ const CONFETTI_DARK = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2
 
 export function Layout(props: Props) {
   return (
-    <Box
-      margin="0 auto"
-      minH="100vh"
-      bg={useColorModeValue("gray.100", "gray.900")}
-      css={{
-        backgroundImage: useColorModeValue(CONFETTI_LIGHT, CONFETTI_DARK),
-        backgroundAttachment: "fixed",
-      }}
-    >
-      <Header />
-      <Container maxW="container.md">{props.children}</Container>
-      <Footer />
-    </Box>
+    <>
+      <Head />
+      <Box
+        margin="0 auto"
+        minH="100vh"
+        bg={useColorModeValue("gray.100", "gray.900")}
+        css={{
+          backgroundImage: useColorModeValue(CONFETTI_LIGHT, CONFETTI_DARK),
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <Header />
+        <Container maxW="container.md">{props.children}</Container>
+        <Footer />
+      </Box>
+    </>
   );
 }

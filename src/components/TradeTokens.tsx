@@ -25,20 +25,24 @@ import {
   SimpleGrid,
   Heading,
   VisuallyHiddenInput,
+  IconButton,
 } from "@chakra-ui/react";
 import { sendTransaction } from "@wagmi/core";
 import React from "react";
 import { useAccount, useContract } from "wagmi";
 import { erc20ABI } from "wagmi";
 import { useNetwork } from "wagmi";
+import ListOfTokens from "./ListOfTokens";
 //0x: Exchange Proxy  0xdef1c0ded9bec7f1a1670819833240f027b25eff
 
 const tokenListJSON = require("../utils/TokensList.json");
 const tokens = tokenListJSON.tokens;
 
 const CreateOxAPICall = function CreateOxAPICall(chain) {
-  let quoteQuery = ""
-  const amountToSell = new BigNumber(document?.getElementById("amountTokenToSell").value * Math.pow(10, 18)).toFixed();
+  let quoteQuery = "";
+  const amountToSell = new BigNumber(
+    document?.getElementById("amountTokenToSell").value * Math.pow(10, 18)
+  ).toFixed();
   const sellToken = document.getElementById("TokenToSell").value;
   const buyToken = document.getElementById("TokenToBuy").value;
 
@@ -51,8 +55,10 @@ const CreateOxAPICall = function CreateOxAPICall(chain) {
     quoteQuery = `https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
   }
   if (chain.network === "goerli") {
-    quoteQuery = `https://${chain.network}.api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
-  } 
+    quoteQuery = `https://${
+      chain.network
+    }.api.0x.org/swap/v1/quote?${qs.stringify(params)}`;
+  }
   console.log(quoteQuery);
 };
 
@@ -139,7 +145,7 @@ async function RequestForQuote() {
   document.getElementById("rateLabel").style.display = "block";
 }
 //try getting an official quote and try to do the swap
-async function TryPerformSwapToken(_address: any, ERC20TokenContrac) {
+async function TryPerformSwapToken(_address: any, _ERC20TokenContract) {
   //const _address = document?.getElementById("UserAddress").value
   const amountToSell = 1 * Math.pow(10, 18);
   const sellToken = "WETH";
@@ -191,6 +197,7 @@ export default function TradeTokens() {
   });
 
   return (
+    <>
     <Flex align="center" justify="center">
       <HStack spacing={{ base: 4, md: 8, lg: 20 }}>
         {/* The title */}
@@ -237,12 +244,22 @@ export default function TradeTokens() {
                     <SimpleGrid columns={2} spacing={2}>
                       <Box>
                         <HStack>
-                          <Image
-                            alt={"Login Image"}
-                            src={tokens[8].logoURI}
-                            width={8}
-                            height={8}
-                            id="SellTokenImage"
+                          <IconButton
+                            variant="outline"
+                            colorScheme="teal"
+                            aria-label="Call Sage"
+                            border={"none"}
+                            fontSize="20px"
+                            icon={
+                              <Image
+                                alt={"Login Image"}
+                                src={tokens[8].logoURI}
+                                width={8}
+                                height={8}
+                                id="SellTokenImage"
+                              />
+                            }
+                            onClick={onOpen}
                           />
                           <Input
                             type="text"
@@ -271,12 +288,22 @@ export default function TradeTokens() {
                     <SimpleGrid columns={2} spacing={2}>
                       <Box>
                         <HStack>
-                          <Image
-                            alt={"Login Image"}
-                            src={tokens[1].logoURI}
-                            width={8}
-                            height={8}
-                            id="BuyTokenImage"
+                          <IconButton
+                            variant="outline"
+                            colorScheme="teal"
+                            aria-label="Call Sage"
+                            border={"none"}
+                            fontSize="20px"
+                            icon={
+                              <Image
+                                alt={"Login Image"}
+                                src={tokens[1].logoURI}
+                                width={8}
+                                height={8}
+                                id="BuyTokenImage"
+                              />
+                            }
+                            onClick={onOpen}
                           />
                           <Input
                             type="text"
@@ -417,13 +444,13 @@ export default function TradeTokens() {
           </Stack>
           <>
             {/* the modal */}
-            <Modal isOpen={isOpen} onClose={onClose} size={"lg"}>
+            <Modal isOpen={isOpen} onClose={onClose} >
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Modal Title</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody id="ModalListOfTokens">
-                  <Text>List of tokens</Text>
+                <ListOfTokens />
                 </ModalBody>
 
                 <ModalFooter>
@@ -440,5 +467,6 @@ export default function TradeTokens() {
         </Box>
       </HStack>
     </Flex>
-  );
+    </>);
 }
+
