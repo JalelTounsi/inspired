@@ -5,7 +5,7 @@ export default function CustomErorrs() {
   const router = useRouter()
 
   useEffect(() => {
-    router.replace("/trade")
+    router.replace("/")
   })
 
   return null

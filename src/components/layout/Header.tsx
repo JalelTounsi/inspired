@@ -18,7 +18,8 @@ import {
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ChevronRightIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { Logo } from "utils/lib";
+import { Logo } from "utils/helper";
+import { SITE_NAME } from "utils/config";
 interface Props {
   className?: string;
 }
@@ -39,6 +40,7 @@ export function Header(props: Props) {
       className={className}
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
+      opacity={1}
       px={4}
       py={2}
       mb={8}
@@ -115,7 +117,7 @@ const DesktopNav = () => {
                   bg: linkHoverBackgroundColor,
                 }}
               >
-                <Text as="samp">{navItem.label}</Text>
+                <Text as="samp"><Text as="b">{navItem.label}</Text></Text>
               </Link>
             </PopoverTrigger>
             {navItem.children && (
@@ -263,26 +265,21 @@ const NAV_ITEMS: Array<NavItem> = [
   //   // ],
   // },
   {
-    label: "Trade",
-    href: "/trade",
+    label: "0x",
+    href: "/trade0x",
+  },  {
+    label: "Uni",
+    href: "/tradeUni",
   },
   {
     label: "Pay",
     href: "transfer",
   },
-  {
-    label: "ETH/EUR",
-    href: "/ETHEUR",
-  },
-  {
-    label: "ETH/BTC",
-    href: "/ETHBTC",
-  },
-  {
-    label: "BTC/EUR",
-    href: "/BTCEUR",
-  },  {
-    label: "tokens",
+{
+    label: "list",
     href: "/tokensList",
+  },{
+    label: "sign",
+    href: "/sign",
   },
 ];

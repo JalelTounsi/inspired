@@ -756,7 +756,7 @@
   dependencies:
     "@chakra-ui/utils" "2.0.12"
 
-"@chakra-ui/react@^2.4.4":
+"@chakra-ui/react@^2.4.2":
   "integrity" "sha512-mA0Js3qpRBTmhPuBlBw85OG9ot7uh7+4IjsASmkzbpJVB1Kz9Z+7RBOpjHfK/03zEsRp+XYrb1ps0DYl8ih5bQ=="
   "resolved" "https://registry.npmjs.org/@chakra-ui/react/-/react-2.4.4.tgz"
   "version" "2.4.4"
@@ -3778,6 +3778,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fs@^0.0.1-security":
+  "integrity" "sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w=="
+  "resolved" "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz"
+  "version" "0.0.1-security"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -4634,7 +4639,12 @@
   "resolved" "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
-"next@13.0.7":
+"next-seo@^5.15.0":
+  "integrity" "sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg=="
+  "resolved" "https://registry.npmjs.org/next-seo/-/next-seo-5.15.0.tgz"
+  "version" "5.15.0"
+
+"next@^8.1.1-canary.54 || >=9.0.0", "next@13.0.7":
   "integrity" "sha512-YfTifqX9vfHm+rSU/H/3xvzOHDkYuMuh4wsvTjiqj9h7qHEF7KHB66X4qrH96Po+ohdid4JY8YVGPziDwdXL0A=="
   "resolved" "https://registry.npmjs.org/next/-/next-13.0.7.tgz"
   "version" "13.0.7"
@@ -5070,7 +5080,7 @@
   dependencies:
     "@babel/runtime" "^7.12.13"
 
-"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.8 || ^17.0.0 || ^18.0.0", "react-dom@>=17", "react-dom@>=18", "react-dom@18.2.0":
+"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.0.0", "react-dom@>=16.8 || ^17.0.0 || ^18.0.0", "react-dom@>=17", "react-dom@>=18", "react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -5149,7 +5159,7 @@
     "invariant" "^2.2.4"
     "tslib" "^2.0.0"
 
-"react@*", "react@^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.8", "react@>=16.8 || ^17.0.0 || ^18.0.0", "react@>=16.8.0", "react@>=17", "react@>=17.0.0", "react@>=18", "react@18.2.0":
+"react@*", "react@^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16.0.0", "react@>=16.8", "react@>=16.8 || ^17.0.0 || ^18.0.0", "react@>=16.8.0", "react@>=17", "react@>=17.0.0", "react@>=18", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

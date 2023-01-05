@@ -43,7 +43,6 @@ export default function CallToActionWithAnnotation() {
           <Text color={"gray.500"}>
             Why use one decentralized exchange when you can use them all from
             the comfort of your house?
-            <Text color={"gray.500"}>
               {SITE_NAME} aggregates all the offers from 50+ liquidity sources
               on various public chains, private liquidity providers,
               decentralized exchanges and merges them into one trade so you can
@@ -52,7 +51,6 @@ export default function CallToActionWithAnnotation() {
             <Text color={"gray.500"}>
               Your financial independence starts here and now!
             </Text>
-          </Text>
           <Stack
             direction={"column"}
             spacing={3}
@@ -68,7 +66,7 @@ export default function CallToActionWithAnnotation() {
               _hover={{
                 bg: "green.500",
               }}
-              onClick={() => router.push("/swap")}
+              onClick={() => router.push("/trade0x")}
             >
               Launch app
             </Button>

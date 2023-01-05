@@ -1,3 +1,4 @@
+
 import {
   Box,
   Image,
@@ -12,11 +13,39 @@ import {
   Tfoot,
   IconButton,
   useColorModeValue,
+  StylesProvider,
+  border,
 } from "@chakra-ui/react";
 
-export default function ListOfTokens() {
+function getNetworkName(chainID){
+  if(chainID === 1)
+  return "Ethereum"
+  if(chainID === 3)
+  return "Ropsten"
+  if(chainID === 4)
+  return "Rinkeby"
+  if(chainID === 5)
+  return "Goerli"
+  if(chainID === 42)
+  return "Kovan"
+  if(chainID === 137)
+  return "Polygon"
+  if(chainID === 80001)
+  return "Mumbai"
+  if(chainID === 56)
+  return "Binance Smart Chain"
+  if(chainID === 42161)
+  return "Arbitrum One"
+  if(chainID === 10)
+  return "Optimism"
+  if(chainID === 42220)
+  return "Celo"
+  else return chainID
+}
+export default function TheList() {
   const tokenListJSON = require("../utils/TokensList.json");
   const tokenList = tokenListJSON.tokens;
+  let count = 1;
   //console.log(tokenList);
   return (
     <Box>
@@ -30,29 +59,33 @@ export default function ListOfTokens() {
           <TableCaption>Tokens list</TableCaption>
           <Thead>
             <Tr>
+            <Th>ID</Th>
               <Th>name</Th>
               <Th>symbol</Th>
+              {/* <Th>chainId</Th> */}
               <Th>logo</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tokenList &&
-              tokenList.map((token) => (
-                <Tr key={token.symbol}>
-                  <Td  width={2}>{token.name}</Td>
-                  <Td  width={2}>{token.symbol}</Td>
-                  <Td  width={2}>
+              tokenList.map((item) => (
+                <Tr key={item.address}>
+                  <Td>{count++}</Td>
+                  <Td>{item.name}</Td>
+                  <Td>{item.symbol}</Td>
+                  {/* <Td>{getNetworkName(item.chainId)}</Td> */}
+                  <Td>
                     <IconButton
                       variant="outline"
                       colorScheme="teal"
                       aria-label="Call Sage"
                       border={"none"}
                       fontSize="20px"
-                      icon={<Image src={token.logoURI} />}
+                      icon={<Image src={item.logoURI} />}
                       height={10}
                       width={10}
                       onClick={() => {
-                        alert(token.symbol);
+                        alert(item.symbol);
                       }}
                     />
                   </Td>
@@ -61,8 +94,10 @@ export default function ListOfTokens() {
           </Tbody>
           <Tfoot>
             <Tr>
+            <Th>ID</Th>
               <Th>name</Th>
               <Th>symbol</Th>
+              {/* <Th>chainId</Th> */}
               <Th>logo</Th>
             </Tr>
           </Tfoot>

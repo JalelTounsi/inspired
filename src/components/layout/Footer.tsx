@@ -3,7 +3,7 @@ import { Box, Container, Link, Stack, Text, useBreakpointValue, useColorModeValu
 import { FaDiscord, FaGithub, FaLinkedin, FaMedium, FaReddit, FaTwitter } from 'react-icons/fa'
 import { SITE_DESCRIPTION, SOCIAL_GITHUB, SOCIAL_LINKEDIN, SOCIAL_MEDIUM, SOCIAL_TWITTER, SOCIAL_DISCORD, SOCIAL_REDDIT } from 'utils/config'
 import { NetworkStatus } from 'components/NetworkStatus'
-import { Logo, SocialButton } from 'utils/lib'
+import { Logo, SocialButton } from 'utils/helper'
 
 interface Props {
   className?: string

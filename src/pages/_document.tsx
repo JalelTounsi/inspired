@@ -7,7 +7,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/gangstaish.png" />
       </Head>
       <body>
         <ColorModeScript initialColorMode={THEME_INITIAL_COLOR} />

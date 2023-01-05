@@ -1,14 +1,14 @@
 import { Box, Container, Stack } from '@chakra-ui/react'
-import ETHEUR from 'components/ETHEUR'
+import TradeTokensUni from 'components/TradeTokensUni'
 import React from 'react'
 
-export default function Dashboard() {
+export default function TradeUni() {
   return (
     <>
       <Box minH={'100vh'}>
         <Container maxW={'3xl'} alignItems={'center'} justifyContent={'center'}>
           <Stack as={Box} textAlign={'center'} spacing={{ base: 8, md: 14 }} py={{ base: 20, md: 36 }}>
-          <ETHEUR />
+          <TradeTokensUni />
           </Stack>
         </Container>
       </Box>

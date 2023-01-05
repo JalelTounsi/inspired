@@ -3,6 +3,7 @@ import { mainnet, goerli, sepolia, polygon, optimism, arbitrum } from '@wagmi/ch
 
 export const SITE_NAME = 'Inspired'
 export const SITE_DESCRIPTION = 'DeFi & Liquidity aggregator'
+export const SITE_URL = 'https://inspired.vercel.app'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
