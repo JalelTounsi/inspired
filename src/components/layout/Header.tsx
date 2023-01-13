@@ -44,7 +44,7 @@ export function Header(props: Props) {
       px={4}
       py={2}
       mb={8}
-      pos="fixed"
+      pos="sticky"
       w="full"
       alignItems="center"
       borderBottom="1px"
